@@ -7,4 +7,6 @@
     <string name="settings">settings</string>
     <string name="search">Search</string>
     <string name="type_video">Тип данных "Видео", загрузка не поддерживается</string>
+    <string name="dark_theme">Темная тема</string>
+    <string name="light_theme">Светлая тема</string>
 </resources>
