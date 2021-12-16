@@ -1,5 +1,7 @@
 package com.example.materialdesigngb.viewmodel
 
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -38,7 +40,7 @@ class PODViewModel(
                     }
 
                     override fun onFailure(call: Call<PODServerResponseData>, t: Throwable) {
-                        TODO("Not yet implemented")
+                        Log.d("myLogs", "onFailure: ошибка интернет соедниения")
                     }
 
                 }

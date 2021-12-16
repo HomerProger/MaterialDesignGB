@@ -52,6 +52,7 @@ class PODFragment : Fragment() {
             }
             startActivity(i)
         }
+        view.setOnClickListener { binding.textInputEditText.clearFocus() }
         bottomSheetBehavior = BottomSheetBehavior.from(binding.includeLayout.bottomSheetContainer)
         binding.includeLayout.bottomSheetDescriptionHeader.text = "Описание"
 
@@ -59,7 +60,9 @@ class PODFragment : Fragment() {
 
     private fun renderData(podDataState: PODDataState) {
         when (podDataState) {
-            is PODDataState.Error -> TODO()
+            is PODDataState.Error -> {
+
+            }
             is PODDataState.Loading -> {
             }
             is PODDataState.Success -> {
@@ -68,6 +71,7 @@ class PODFragment : Fragment() {
                 } else {
                     binding.imageView.load(podDataState.serverResponseData.url) {
                         error(R.drawable.ic_load_error_vector)
+                        placeholder(R.drawable.ic_no_photo_vector)
                     }
                 }
                 binding.includeLayout.bottomSheetDescription.text =
