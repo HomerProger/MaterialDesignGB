@@ -1,6 +1,9 @@
 package com.example.materialdesigngb.view
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,14 +13,21 @@ import androidx.core.app.ActivityCompat.recreate
 import androidx.fragment.app.Fragment
 import com.example.materialdesigngb.R
 import com.example.materialdesigngb.databinding.FragmentSettingsBinding
+import kotlin.math.log
+import kotlin.properties.Delegates
 
 class SettingsFragment : Fragment() {
+
     private var _binding: FragmentSettingsBinding? = null
     private val binding: FragmentSettingsBinding
         get() :FragmentSettingsBinding = _binding!!
 
+    private var i = 0
+    private var m = 0
+
     companion object {
         fun newInstance() = SettingsFragment()
+        var currentTheme = R.style.Theme_MaterialDesignGB
     }
 
     override fun onCreateView(
@@ -31,42 +41,32 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-            binding.chipGroup.setOnCheckedChangeListener { childGroup, position ->
-            when (position) {
-                1 -> {
-                    changeTheme(R.style.GreenTheme)
-                    Toast.makeText(context,"Выбрана зеленая тема", Toast.LENGTH_SHORT).show()
+
+        Log.d("myLogs", "onViewCreated: ")
+        binding.chipGroup.setOnCheckedChangeListener { childGroup, position ->
+
+            currentTheme = when (position) {
+                R.id.chip_green -> {
+                    Toast.makeText(context, "Выбрана зеленая тема", Toast.LENGTH_SHORT).show()
+                    R.style.GreenTheme
+                    Log.d("myLogs", "Итерация m ${m++}")
                 }
-                2 -> {
-                    changeTheme(R.style.RedTheme)
-                    Toast.makeText(context,"Выбрана красная тема", Toast.LENGTH_SHORT).show()
+                R.id.chip_red -> {
+                    Toast.makeText(context, "Выбрана красная тема", Toast.LENGTH_SHORT).show()
+                    R.style.RedTheme
                 }
+                else -> R.style.Theme_MaterialDesignGB
             }
 
+          (requireActivity() as MainActivity).recreate()
+            Log.d("myLogs", "Итерация i ${i++}")
         }
-//        binding.switchTheme.setOnCheckedChangeListener{ buttonView, isChecked ->
-//            if(isChecked){
-//                changeTheme(R.style.GreenTheme)
-//            }
-//        }
-//        binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
-//            val theme = when(checkedId){
-//                R.id.radioButtonGreen -> R.style.GreenTheme
-//                R.id.radioButtonRed   -> R.style.RedTheme
-//                else -> R.style.Theme_MaterialDesignGB
-//            }
-//            changeTheme(theme)
-//        }
-
-
     }
-private fun changeTheme(themeID: Int){
-    (requireActivity() as? MainActivity)?.let {
-        it.changeTheme(themeID)
-    }
-}
+
     override fun onDestroy() {
         super.onDestroy()
+        Log.d("myLogs", "Фрагмент onDestroy: ")
         _binding = null
     }
+
 }

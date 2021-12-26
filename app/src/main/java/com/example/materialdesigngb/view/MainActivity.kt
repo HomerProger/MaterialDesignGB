@@ -2,6 +2,7 @@ package com.example.materialdesigngb.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.annotation.StyleRes
@@ -10,7 +11,8 @@ import com.example.materialdesigngb.R
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(ThemeHolder.theme)
+        Log.d("myLogs", "onCreate: ")
+        setTheme(SettingsFragment.currentTheme)
         setContentView(R.layout.activity_main)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
@@ -39,13 +41,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun changeTheme(@StyleRes themeID: Int) {
-        ThemeHolder.theme = themeID
-        recreate()
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("myLogs", "onDestroy: ")
     }
-
-}
-
-object ThemeHolder {
-    var theme = R.style.Theme_MaterialDesignGB
 }
